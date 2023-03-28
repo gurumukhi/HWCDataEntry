@@ -3,6 +3,9 @@
   <head>
     <title>HWC Data Entry</title>
     <style>
+      .idEl {
+        border: 1px solid red;
+      }
       body {
         text-align: center;
       }
@@ -34,7 +37,8 @@
       }
       .yearwise button {
         display: inline;
-        margin: 10px;
+        margin-left: 10px;
+        margin-bottom: 10px;
       }
       .yearwise input {
         display: inline-block;
@@ -74,8 +78,8 @@
   <body>
     <h1>HWC Data Entry</h1>
     <div id="topBlock">
-      <label for="fdSrNo">FD Sr No:</label>
-      <input type="number" id="fdSrNo" name="fdSrNo" />
+      <!-- <label for="fdSrNo">FD Sr No:</label>
+      <input type="number" id="fdSrNo" name="fdSrNo" /> -->
 
       <label for="state">State:</label>
       <input type="text" id="state" name="state" />
@@ -89,7 +93,7 @@
     <script>
       var yearwiseBlock = document.getElementById('yearwiseBlock')
 
-      for (var year = 2000; year <= 2019; year++) {
+      for (var year = 2000; year <= 2020; year++) {
         var yearwiseDiv = document.createElement('div')
         yearwiseDiv.classList.add('yearwise')
         yearwiseBlock.appendChild(yearwiseDiv)
@@ -110,12 +114,21 @@
 
         var addRowButton = document.createElement('button')
         addRowButton.innerText = '+'
+        addRowButton.classList.add('addRowButton')
         addRowButton.addEventListener('click', function () {
-          addRow(this.parentElement, year)
-          //   addRow(deathCasesDiv, year)
+          addRow(this.parentElement, year, 'dc')
         })
         // yearwiseDiv.appendChild(addRowButton)
         deathCasesDiv.appendChild(addRowButton)
+
+        var removeRowButton = document.createElement('button')
+        removeRowButton.innerText = '-'
+        removeRowButton.style.visibility = 'hidden'
+        removeRowButton.classList.add('removeRowButton')
+        removeRowButton.addEventListener('click', function () {
+          removeRow(this.parentElement, year)
+        })
+        deathCasesDiv.appendChild(removeRowButton)
 
         var injuryCasesDiv = document.createElement('span')
         injuryCasesDiv.id = 'injuryCasesDiv' + year
@@ -129,21 +142,27 @@
 
         var addRowButton = document.createElement('button')
         addRowButton.innerText = '+'
+        addRowButton.classList.add('addRowButton')
         addRowButton.addEventListener('click', function () {
-          addRow(this.parentElement, year)
-          //   addRow(injuryCasesDiv, year)
+          addRow(this.parentElement, year, 'ic')
         })
         // yearwiseDiv.appendChild(addRowButton)
         injuryCasesDiv.appendChild(addRowButton)
 
-        // addRow(yearwiseDiv, year)
-        // addRow(injuryCasesDiv, year)
+        var removeRowButton = document.createElement('button')
+        removeRowButton.innerText = '-'
+        removeRowButton.style.visibility = 'hidden'
+        removeRowButton.classList.add('removeRowButton')
+        removeRowButton.addEventListener('click', function () {
+          removeRow(this.parentElement, year)
+        })
+        injuryCasesDiv.appendChild(removeRowButton)
 
         var hr = document.createElement('hr')
         yearwiseBlock.appendChild(hr)
       }
 
-      function addRow(yearwiseDiv, year) {
+      function addRow(yearwiseDiv, year, caseType) {
         // console.log('adding row')
         // console.log(yearwiseDiv.innerHTML)
         var rowDiv = document.createElement('span')
@@ -152,17 +171,17 @@
         var br = document.createElement('br')
         rowDiv.appendChild(br)
 
-        var speciesInput = document.createElement('input')
-        speciesInput.type = 'text'
-        speciesInput.name = 'species'
-        speciesInput.id = 'species' + year
-        speciesInput.placeholder = 'Wildlife Species'
-        rowDiv.appendChild(speciesInput)
+        var wlInput = document.createElement('input')
+        wlInput.type = 'text'
+        wlInput.name = 'wl'
+        wlInput.id = caseType + '_' + year + '_wl'
+        wlInput.placeholder = 'Wildlife Species'
+        rowDiv.appendChild(wlInput)
 
         var casesInput = document.createElement('input')
         casesInput.type = 'number'
         casesInput.name = 'cases'
-        casesInput.id = 'cases' + year
+        casesInput.id = caseType + '_' + year + '_cases'
         casesInput.placeholder = 'Cases'
         // casesInput.value = 0
         rowDiv.appendChild(casesInput)
@@ -170,7 +189,7 @@
         var compensationInput = document.createElement('input')
         compensationInput.type = 'number'
         compensationInput.name = 'compensation'
-        compensationInput.id = 'compensation' + year
+        compensationInput.id = caseType + '_' + year + '_compensation'
         compensationInput.placeholder = '₹'
         // compensationInput.value = 0
         rowDiv.appendChild(compensationInput)
@@ -178,7 +197,7 @@
         var remarksInput = document.createElement('input')
         remarksInput.type = 'text'
         remarksInput.name = 'remarks'
-        remarksInput.id = 'remarks' + year
+        remarksInput.id = caseType + '_' + year + '_remarks'
         remarksInput.placeholder = 'Remarks'
         rowDiv.appendChild(remarksInput)
 
@@ -186,10 +205,114 @@
         // rowDiv.appendChild(br)
 
         // console.log(yearwiseDiv.innerHTML)
+        spanElements = yearwiseDiv.querySelectorAll('span')
+        // console.log(spanElements)
+        if (spanElements.length > 1) {
+          //   console.log('show')
+          yearwiseDiv.querySelector('.removeRowButton').style.visibility = ''
+        } else {
+          //   console.log('hide')
+          yearwiseDiv.querySelector('.removeRowButton').style.visibility =
+            'hidden'
+        }
+      }
+
+      function removeRow(div, year) {
+        // console.log(div)
+        spanElements = div.querySelectorAll('span')
+        // console.log(spanElements)
+        const lastSpan = div.lastElementChild
+        lastSpan.remove()
+        if (spanElements.length > 2) {
+          //   console.log('show')
+
+          div.querySelector('.removeRowButton').style.visibility = ''
+        } else {
+          //   console.log('hide')
+          div.querySelector('.removeRowButton').style.visibility = 'hidden'
+        }
+      }
+
+      //   // Get all input tags in the page
+      //   inputElements = document.getElementsByTagName('input')
+
+      //   // Loop through each input tag and display its ID
+      //   for (let i = 0; i < inputElements.length; i++) {
+      //     inputElement = inputElements[i]
+      //     inputId = inputElement.id
+
+      //     // Create a new element to display the input ID
+      //     idElement = document.createElement('span')
+      //     idElement.classList.add('idEl')
+      //     idElement.innerText = inputId
+
+      //     // Insert the ID element after the input element
+      //     inputElement.parentNode.insertBefore(
+      //       idElement,
+      //       inputElement.nextSibling
+      //     )
+      //   }
+      function submit() {
+        json = {}
+        json.STATE = document.querySelector('#state').value
+        json.FD = document.querySelector('#fdName').value
+
+        json.dealthNoOfCasesArray = [
+          [[0]], // 2000-01 DEATH..
+          [[0]], // 2001-02 DEATH..
+          [[0]], // 2002-03 DEATH..
+          [[0]], // 2003-04 DEATH..
+          [[0]], // 2004-05 DEATH..
+          [[0]], // 2005-06 DEATH..
+          [[0]], // 2006-07 DEATH..
+          [[0]], // 2007-08 DEATH..
+          [[0]], // 2008-09 DEATH..
+          [[0]], // 2009-10 DEATH..
+          [[0]], // 2010-11 DEATH..
+          [[0]], // 2011-12 DEATH..
+          [[0]], // 2012-13 DEATH..
+          [[0]], // 2013-14 DEATH..
+          [[0]], // 2014-15 DEATH..
+          [[0]], // 2015-16 DEATH..
+          [[0]], // 2016-17 DEATH..
+          [[0]], // 2017-18 DEATH..
+          [[0]], // 2018-19 DEATH..
+          [[0]], // 2019-20 DEATH..
+          [[0]] // 2020-21 DEATH..
+        ]
+
+        json.injuryNoOfCasesArray = [
+          [[0]], // 2000-01 INJURY..
+          [[0]], // 2001-02 INJURY..
+          [[0]], // 2002-03 INJURY..
+          [[0]], // 2003-04 INJURY..
+          [[0]], // 2004-05 INJURY..
+          [[0]], // 2005-06 INJURY..
+          [[0]], // 2006-07 INJURY..
+          [[0]], // 2007-08 INJURY..
+          [[0]], // 2008-09 INJURY..
+          [[0]], // 2009-10 INJURY..
+          [[0]], // 2010-11 INJURY..
+          [[0]], // 2011-12 INJURY..
+          [[0]], // 2012-13 INJURY..
+          [[0]], // 2013-14 INJURY..
+          [[0]], // 2014-15 INJURY..
+          [[0]], // 2015-16 INJURY..
+          [[0]], // 2016-17 INJURY..
+          [[0]], // 2017-18 INJURY..
+          [[0]], // 2018-19 INJURY..
+          [[0]], // 2019-20 INJURY..
+          [[0]] // 2020-21 INJURY..
+        ]
+
+        // inputElements = document.getElementsByTagName('input')
+        inputElements = document.querySelectorAll('.yearwise input')
+        console.log(inputElements)
+        // console.log(json)
       }
     </script>
     <div class="submitDiv">
-      <button type="submit">Submit</button>
+      <button type="submit" onClick="submit()">Convert to Excel</button>
     </div>
   </body>
 </html>
