@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HWC Data Entry</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      label {
+        display: inline-block;
+        padding-left: 10px;
+      }
+      #topBlock input[type='number'] {
+        width: 60px;
+      }
+      /* #topBlock {
+        margin-bottom: 40px;
+      } */
+      input {
+        display: inline-block;
+        width: 200px;
+        box-sizing: border-box;
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+      .yearwise {
+        /* border: 1px solid black; */
+        margin-top: 10px;
+        /* padding: 10px; */
+      }
+      .yearwise h2 {
+        display: inline;
+        margin-right: 10px;
+      }
+      .yearwise button {
+        display: inline;
+        margin: 10px;
+      }
+      .yearwise input {
+        display: inline-block;
+        width: 120px;
+        box-sizing: border-box;
+        padding: 5px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+      .yearwise input[type='number'] {
+        width: 80px;
+      }
+      .yearwise label {
+        display: inline-block;
+        width: 200px;
+      }
+      .yearwise .casesDiv {
+        display: inline-table;
+        width: 40%;
+      }
+      .submitDiv {
+        text-align: center;
+        margin: 40px;
+      }
+      button[type='submit'] {
+        width: 400px;
+        height: 40px;
+      }
+      hr {
+        background-color: #eee;
+        border: 0 none;
+        color: #eee;
+        height: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>HWC Data Entry</h1>
+    <div id="topBlock">
+      <label for="fdSrNo">FD Sr No:</label>
+      <input type="number" id="fdSrNo" name="fdSrNo" />
+
+      <label for="state">State:</label>
+      <input type="text" id="state" name="state" />
+
+      <label for="fdName">FD Name:</label>
+      <input type="text" id="fdName" name="fdName" />
+    </div>
+    <br /><br />
+    <div id="yearwiseBlock"></div>
+
+    <script>
+      var yearwiseBlock = document.getElementById('yearwiseBlock')
+
+      for (var year = 2000; year <= 2019; year++) {
+        var yearwiseDiv = document.createElement('div')
+        yearwiseDiv.classList.add('yearwise')
+        yearwiseBlock.appendChild(yearwiseDiv)
+
+        var yearLabel = document.createElement('h2')
+        yearLabel.innerText = year + '-' + (year + 1).toString().substring(2)
+        yearwiseDiv.appendChild(yearLabel)
+
+        var deathCasesDiv = document.createElement('span')
+        deathCasesDiv.id = 'deathCasesDiv' + year
+        deathCasesDiv.classList.add('deathCasesDiv')
+        deathCasesDiv.classList.add('casesDiv')
+        yearwiseDiv.appendChild(deathCasesDiv)
+
+        var deathCaseSpan = document.createElement('span')
+        deathCaseSpan.innerText = ' Death cases' //year +
+        deathCasesDiv.appendChild(deathCaseSpan)
+
+        var addRowButton = document.createElement('button')
+        addRowButton.innerText = '+'
+        addRowButton.addEventListener('click', function () {
+          addRow(this.parentElement, year)
+          //   addRow(deathCasesDiv, year)
+        })
+        // yearwiseDiv.appendChild(addRowButton)
+        deathCasesDiv.appendChild(addRowButton)
+
+        var injuryCasesDiv = document.createElement('span')
+        injuryCasesDiv.id = 'injuryCasesDiv' + year
+        injuryCasesDiv.classList.add('injuryCasesDiv')
+        injuryCasesDiv.classList.add('casesDiv')
+        yearwiseDiv.appendChild(injuryCasesDiv)
+
+        var injuryCasesSpan = document.createElement('span')
+        injuryCasesSpan.innerText = ' Injury cases' //year +
+        injuryCasesDiv.appendChild(injuryCasesSpan)
+
+        var addRowButton = document.createElement('button')
+        addRowButton.innerText = '+'
+        addRowButton.addEventListener('click', function () {
+          addRow(this.parentElement, year)
+          //   addRow(injuryCasesDiv, year)
+        })
+        // yearwiseDiv.appendChild(addRowButton)
+        injuryCasesDiv.appendChild(addRowButton)
+
+        // addRow(yearwiseDiv, year)
+        // addRow(injuryCasesDiv, year)
+
+        var hr = document.createElement('hr')
+        yearwiseBlock.appendChild(hr)
+      }
+
+      function addRow(yearwiseDiv, year) {
+        // console.log('adding row')
+        // console.log(yearwiseDiv.innerHTML)
+        var rowDiv = document.createElement('span')
+        yearwiseDiv.appendChild(rowDiv)
+
+        var br = document.createElement('br')
+        rowDiv.appendChild(br)
+
+        var speciesInput = document.createElement('input')
+        speciesInput.type = 'text'
+        speciesInput.name = 'species'
+        speciesInput.id = 'species' + year
+        speciesInput.placeholder = 'Wildlife Species'
+        rowDiv.appendChild(speciesInput)
+
+        var casesInput = document.createElement('input')
+        casesInput.type = 'number'
+        casesInput.name = 'cases'
+        casesInput.id = 'cases' + year
+        casesInput.placeholder = 'Cases'
+        // casesInput.value = 0
+        rowDiv.appendChild(casesInput)
+
+        var compensationInput = document.createElement('input')
+        compensationInput.type = 'number'
+        compensationInput.name = 'compensation'
+        compensationInput.id = 'compensation' + year
+        compensationInput.placeholder = '₹'
+        // compensationInput.value = 0
+        rowDiv.appendChild(compensationInput)
+
+        var remarksInput = document.createElement('input')
+        remarksInput.type = 'text'
+        remarksInput.name = 'remarks'
+        remarksInput.id = 'remarks' + year
+        remarksInput.placeholder = 'Remarks'
+        rowDiv.appendChild(remarksInput)
+
+        // var br = document.createElement('br')
+        // rowDiv.appendChild(br)
+
+        // console.log(yearwiseDiv.innerHTML)
+      }
+    </script>
+    <div class="submitDiv">
+      <button type="submit">Submit</button>
+    </div>
+  </body>
+</html>
