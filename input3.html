@@ -457,7 +457,7 @@
         showCSV(strXls, downloadExcel)
 
         if (downloadExcel) {
-          downloadCsvAsExcel(strXls, 'data')
+          downloadCsvAsExcel(strXls, document.querySelector('#fdName').value)
         }
       }
 
