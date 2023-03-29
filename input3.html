@@ -3,9 +3,6 @@
   <head>
     <title>HWC Data Entry</title>
     <style>
-      .idEl {
-        border: 1px solid red;
-      }
       body {
         text-align: center;
       }
@@ -16,9 +13,6 @@
       #topBlock input[type='number'] {
         width: 60px;
       }
-      /* #topBlock {
-        margin-bottom: 40px;
-      } */
       input {
         display: inline-block;
         width: 200px;
@@ -63,15 +57,25 @@
         text-align: center;
         margin: 40px;
       }
+      .addRowButton,
+      .removeRowButton {
+        background-color: transparent;
+        border-width: 0.7px;
+        border-radius: 25%;
+      }
       button[type='submit'] {
         width: 400px;
         height: 40px;
+        margin: 10px;
       }
       hr {
         background-color: #eee;
         border: 0 none;
         color: #eee;
         height: 2px;
+      }
+      #csvDisplay {
+        display: none;
       }
     </style>
   </head>
@@ -82,10 +86,11 @@
       <input type="number" id="fdSrNo" name="fdSrNo" /> -->
 
       <label for="state">State:</label>
-      <input type="text" id="state" name="state" />
+      <input type="text" id="state" name="state" value="" />
+      <!-- autocomplete="off"  -->
 
       <label for="fdName">FD Name:</label>
-      <input type="text" id="fdName" name="fdName" />
+      <input type="text" id="fdName" name="fdName" value="" />
     </div>
     <br /><br />
     <div id="yearwiseBlock"></div>
@@ -116,9 +121,8 @@
         addRowButton.innerText = '+'
         addRowButton.classList.add('addRowButton')
         addRowButton.addEventListener('click', function () {
-          addRow(this.parentElement, year, 'dc')
+          addRow(this.parentElement, 'dc')
         })
-        // yearwiseDiv.appendChild(addRowButton)
         deathCasesDiv.appendChild(addRowButton)
 
         var removeRowButton = document.createElement('button')
@@ -129,6 +133,8 @@
           removeRow(this.parentElement, year)
         })
         deathCasesDiv.appendChild(removeRowButton)
+
+        addRow(deathCasesDiv, 'dc')
 
         var injuryCasesDiv = document.createElement('span')
         injuryCasesDiv.id = 'injuryCasesDiv' + year
@@ -144,9 +150,8 @@
         addRowButton.innerText = '+'
         addRowButton.classList.add('addRowButton')
         addRowButton.addEventListener('click', function () {
-          addRow(this.parentElement, year, 'ic')
+          addRow(this.parentElement, 'ic')
         })
-        // yearwiseDiv.appendChild(addRowButton)
         injuryCasesDiv.appendChild(addRowButton)
 
         var removeRowButton = document.createElement('button')
@@ -158,13 +163,14 @@
         })
         injuryCasesDiv.appendChild(removeRowButton)
 
+        addRow(injuryCasesDiv, 'ic')
+
         var hr = document.createElement('hr')
         yearwiseBlock.appendChild(hr)
       }
 
-      function addRow(yearwiseDiv, year, caseType) {
-        // console.log('adding row')
-        // console.log(yearwiseDiv.innerHTML)
+      function addRow(yearwiseDiv, caseType) {
+        year = yearwiseDiv.id.slice(-4)
         var rowDiv = document.createElement('span')
         yearwiseDiv.appendChild(rowDiv)
 
@@ -174,6 +180,7 @@
         var wlInput = document.createElement('input')
         wlInput.type = 'text'
         wlInput.name = 'wl'
+        wlInput.classList.add(caseType + '_' + year + '_wl')
         wlInput.id = caseType + '_' + year + '_wl'
         wlInput.placeholder = 'Wildlife Species'
         rowDiv.appendChild(wlInput)
@@ -181,54 +188,42 @@
         var casesInput = document.createElement('input')
         casesInput.type = 'number'
         casesInput.name = 'cases'
+        casesInput.classList.add(caseType + '_' + year + '_cases')
         casesInput.id = caseType + '_' + year + '_cases'
         casesInput.placeholder = 'Cases'
-        // casesInput.value = 0
         rowDiv.appendChild(casesInput)
 
         var compensationInput = document.createElement('input')
         compensationInput.type = 'number'
         compensationInput.name = 'compensation'
+        compensationInput.classList.add(caseType + '_' + year + '_compensation')
         compensationInput.id = caseType + '_' + year + '_compensation'
         compensationInput.placeholder = '₹'
-        // compensationInput.value = 0
         rowDiv.appendChild(compensationInput)
 
         var remarksInput = document.createElement('input')
         remarksInput.type = 'text'
         remarksInput.name = 'remarks'
+        remarksInput.classList.add(caseType + '_' + year + '_remarks')
         remarksInput.id = caseType + '_' + year + '_remarks'
         remarksInput.placeholder = 'Remarks'
         rowDiv.appendChild(remarksInput)
-
-        // var br = document.createElement('br')
-        // rowDiv.appendChild(br)
-
-        // console.log(yearwiseDiv.innerHTML)
         spanElements = yearwiseDiv.querySelectorAll('span')
-        // console.log(spanElements)
-        if (spanElements.length > 1) {
-          //   console.log('show')
+        if (spanElements.length > 2) {
           yearwiseDiv.querySelector('.removeRowButton').style.visibility = ''
         } else {
-          //   console.log('hide')
           yearwiseDiv.querySelector('.removeRowButton').style.visibility =
             'hidden'
         }
       }
 
       function removeRow(div, year) {
-        // console.log(div)
         spanElements = div.querySelectorAll('span')
-        // console.log(spanElements)
         const lastSpan = div.lastElementChild
         lastSpan.remove()
-        if (spanElements.length > 2) {
-          //   console.log('show')
-
+        if (spanElements.length > 3) {
           div.querySelector('.removeRowButton').style.visibility = ''
         } else {
-          //   console.log('hide')
           div.querySelector('.removeRowButton').style.visibility = 'hidden'
         }
       }
@@ -252,12 +247,12 @@
       //       inputElement.nextSibling
       //     )
       //   }
-      function submit() {
+      function submit(downloadExcel) {
         json = {}
         json.STATE = document.querySelector('#state').value
         json.FD = document.querySelector('#fdName').value
 
-        json.dealthNoOfCasesArray = [
+        json.deathNoOfCasesArray = [
           [[0]], // 2000-01 DEATH..
           [[0]], // 2001-02 DEATH..
           [[0]], // 2002-03 DEATH..
@@ -305,14 +300,218 @@
           [[0]] // 2020-21 INJURY..
         ]
 
-        // inputElements = document.getElementsByTagName('input')
         inputElements = document.querySelectorAll('.yearwise input')
         console.log(inputElements)
-        // console.log(json)
+        inputs = Array.from(inputElements)
+        //    dc = inputs.filter(input => input.id.slice(0, 2) === 'dc')
+
+        //death cases
+        for (yr = 2000; yr < 2021; yr++) {
+          currentYearCases = inputs.filter(
+            c =>
+              c.id.slice(3, 7) == yr &&
+              c.id.slice(8) == 'cases' &&
+              c.value !== ''
+          )
+          //   console.log(currentYearCases)
+          currentYearCases.forEach(element => {
+            console.log(element)
+            if (true || element.id.slice(0, 2) == 'dc') {
+              caseType = element.id.slice(0, 2)
+              arr =
+                caseType == 'dc'
+                  ? json.deathNoOfCasesArray
+                  : json.injuryNoOfCasesArray
+              if (arr[yr - 2000][0][0] == 0) {
+                wl = Array.from(
+                  document.querySelectorAll('.' + caseType + '_' + yr + '_wl')
+                )
+                cases = Array.from(
+                  document.querySelectorAll(
+                    '.' + caseType + '_' + yr + '_cases'
+                  )
+                )
+                compensation = Array.from(
+                  document.querySelectorAll(
+                    '.' + caseType + '_' + yr + '_compensation'
+                  )
+                )
+                remarks = Array.from(
+                  document.querySelectorAll(
+                    '.' + caseType + '_' + yr + '_remarks'
+                  )
+                )
+                newArray = []
+                for (i = 0; i < wl.length; i++) {
+                  newArray.push([
+                    wl[i].value,
+                    Number(cases[i].value),
+                    Number(compensation[i].value),
+                    remarks[i].value
+                  ])
+                }
+                arr[yr - 2000] = newArray
+              } else {
+                //do nothing
+              }
+            } else {
+            }
+          })
+        }
+        console.log(json.deathNoOfCasesArray)
+        console.log(json.injuryNoOfCasesArray)
+        processInputs(json, downloadExcel)
+      }
+      function processInputs(json, downloadExcel) {
+        FD = json.FD
+        STATE = json.STATE
+        DIST = '-'
+        RANGE = '-'
+        yearsTill = json.deathNoOfCasesArray.length
+        noOfCasesArray = []
+        for (i = 0; i < yearsTill; i++) {
+          noOfCasesArray.push(json.deathNoOfCasesArray[i])
+          noOfCasesArray.push(json.injuryNoOfCasesArray[i])
+        }
+
+        wl = '-'
+        noOfCases = '0'
+        comp = '0'
+        remarks = '-'
+
+        yearArray = [
+          '2000-01',
+          '2001-02',
+          '2002-03',
+          '2003-04',
+          '2004-05',
+          '2005-06',
+          '2006-07',
+          '2007-08',
+          '2008-09',
+          '2009-10',
+          '2010-11',
+          '2011-12',
+          '2012-13',
+          '2013-14',
+          '2014-15',
+          '2015-16',
+          '2016-17',
+          '2017-18',
+          '2018-19',
+          '2019-20',
+          '2020-21'
+        ]
+        caseTypeArray = ['human death', 'human injury']
+        // caseTypeArray = ["human kill", "permanent injury", "temporary injury"];
+
+        // columnValues = [
+        //     FD_SR_NO,
+        //     incSrNo,-//1-40
+        //     STATE,
+        //     DIST,
+        //     FD,
+        //     RANGE,
+        //     yearArray,-// 2000-01 till 2019-20
+        //     caseTypeArray,-// human death / human injury
+        //     wl,
+        //     noOfCases,-// --------
+        //     comp,
+        //     remarks];
+
+        //str = "";
+        strXls = ''
+        sr = 0
+        totalCases = 0
+        totalComp = 0
+        for (i = 0; i < yearsTill * 2; i++) {
+          for (j = 0; j < noOfCasesArray[i].length; j++) {
+            sr++
+            noOfCases = noOfCasesArray[i][j][0]
+            wl = !noOfCases
+              ? '0'
+              : noOfCasesArray[i][j][1]
+              ? noOfCasesArray[i][j][1]
+              : ''
+            comp = !noOfCases
+              ? '0'
+              : noOfCasesArray[i][j][2]
+              ? noOfCasesArray[i][j][2]
+              : ''
+            remarks = !noOfCasesArray[i][j][3] ? '-' : noOfCasesArray[i][j][3] // ? noOfCasesArray[i][j][3] : "-";
+            totalComp += Number(comp)
+            totalCases += Number(noOfCases)
+            //        str += `${FD_SR_NO}\t${i + 1}\t${STATE}\t${DIST}\t${FD}\t${RANGE}\t${yearArray[i % 2 ? (i - 1) / 2 : (i) / 2]}\t${caseTypeArray[i % 2]}\t${wl}\t${noOfCasesArray[i][j]}\t${comp}\t${remarks}\n`;
+            // ${FD_SR_NO},
+            strXls += `${i + 1},${STATE},${DIST},${FD},${RANGE},${
+              yearArray[i % 2 ? (i - 1) / 2 : i / 2]
+            },${caseTypeArray[i % 2]},${wl},${noOfCases},${comp},${remarks}
+`
+          }
+        }
+
+        console.log(strXls)
+        console.log(sr)
+        console.log(`TotalCases: ${totalCases}, TotalComp: ${totalComp}`)
+
+        showCSV(strXls, downloadExcel)
+
+        if (downloadExcel) {
+          downloadCsvAsExcel(strXls, 'data')
+        }
+      }
+
+      function showCSV(csv, downloadExcel) {
+        document.querySelector('#csvDisplay').style.display = 'block'
+        document.querySelector('#myTextarea').textContent = csv
+        if (!downloadExcel) {
+          copyToClipboard()
+        }
+      }
+
+      function copyToClipboard() {
+        /* Get the text area element */
+        const textarea = document.getElementById('myTextarea')
+
+        /* Select the text in the text area */
+        textarea.select()
+
+        /* Copy the selected text to the clipboard */
+        document.execCommand('copy')
+
+        /* Alert the user */
+        alert('CSV content copied to clipboard!')
+      }
+
+      //   function convertToExcel(csv) {}
+      function downloadCsvAsExcel(csv, filename) {
+        const csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+
+        // Create a link element to download the Excel file
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(csvData)
+        link.setAttribute('download', filename + '.xls')
+        document.body.appendChild(link)
+
+        // Click the link to download the Excel file
+        link.click()
+
+        // Remove the link from the DOM
+        document.body.removeChild(link)
       }
     </script>
     <div class="submitDiv">
-      <button type="submit" onClick="submit()">Convert to Excel</button>
+      <button type="submit" onClick="submit(0)">Convert to CSV</button>
+      <button type="submit" onClick="submit(1)">Convert to Excel</button>
+    </div>
+
+    <div id="csvDisplay">
+      <h4>CSV Content</h4>
+
+      <textarea id="myTextarea" rows="5" cols="100"></textarea><br />
+      <button style="margin: 10px; padding: 10px" onclick="copyToClipboard()">
+        Copy to Clipboard
+      </button>
     </div>
   </body>
 </html>
