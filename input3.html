@@ -287,6 +287,7 @@
             json = {}
             json.STATE = document.querySelector('#state').value.toLowerCase()
             json.FD = document.querySelector('#fdName').value.toLowerCase()
+            json.fdSrNo = document.querySelector('#fdSrNo').value;
 
             json.deathNoOfCasesArray = [
                 [[0]], // 2000-01 DEATH..
@@ -404,7 +405,7 @@
             STATE = json.STATE
             DIST = '-'
             RANGE = '-'
-            FD_SR_NO = document.querySelector('#fdSrNo').value
+            FD_SR_NO = json.fdSrNo;
             yearsTill = document.querySelector('#show21').checked ? 21 : 20
             //json.deathNoOfCasesArray.length
             noOfCasesArray = []
@@ -503,7 +504,7 @@
             // Total Injury Cases: ${iCases}, Total Injury Comp: ${iComp}
             // Total All Cases: ${iCases + dCases}, Total All Comp: ${iComp + dComp}`;
             totals = `Total Cases: ${iCases + dCases} (${dCases} + ${iCases})
-Total Comp: ${iComp + dComp} (${dComp} + ${iComp})`;
+Total Compensation: ${iComp + dComp} (${dComp} + ${iComp})`;
 
             console.log(totals)
             // console.log(``)
@@ -560,6 +561,7 @@ Total Comp: ${iComp + dComp} (${dComp} + ${iComp})`;
             document.querySelector('#year2021').style.opacity = ch ? 1 : 0.1
         }
     </script>
+
     <div class="include21orNot">
         <br>
         <label for="show21">Include 2020-21?</label>
@@ -569,7 +571,6 @@ Total Comp: ${iComp + dComp} (${dComp} + ${iComp})`;
         <button type="submit" onClick="submit(0)">Convert to CSV</button>
         <button type="submit" onClick="submit(1)">Download Excel Sheet</button>
     </div>
-
     <div id="csvDisplay">
         <span id="showTotal"></span>
         <h4>CSV Content</h4>
@@ -578,11 +579,12 @@ Total Comp: ${iComp + dComp} (${dComp} + ${iComp})`;
         <button style="margin: 10px; padding: 10px" onclick="copyToClipboard()">
             Copy to Clipboard
         </button>
-        <script>
-            document.querySelector('#show21').checked = true
-            document.querySelector('#fdSrNoBlock').style.display = 'none'
-        </script>
     </div>
+
+    <script>
+        document.querySelector('#show21').checked = true
+        document.querySelector('#fdSrNoBlock').style.display = 'none'
+    </script>
 </body>
 
 </html>
