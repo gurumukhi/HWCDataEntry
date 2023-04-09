@@ -104,6 +104,20 @@
             margin: 40px;
         }
 
+        #downloadBtn:active {
+            position: relative;
+            top: 2px;
+            left: 2px;
+
+        }
+
+        #convertBtn:active {
+            position: relative;
+            top: 2px;
+            left: 2px;
+
+        }
+
         .addRowButton,
         .removeRowButton {
             background-color: transparent;
@@ -111,6 +125,7 @@
             border-radius: 25%;
             border-color: silver;
         }
+
 
         button[type='submit'] {
             background-color: #ffbf00;
@@ -629,8 +644,8 @@ Total Compensation: ${iComp + dComp} (${dComp} + ${iComp})`;
         <input style="width:20px" type="checkbox" id="show21" onchange="show21Changed()">
     </div>
     <div class="submitDiv">
-        <button type="submit" onClick="submit(0)">Convert to CSV</button>
-        <button type="submit" onClick="submit(1)">Download Excel Sheet</button>
+        <button id="convertBtn" type="submit" onClick="submit(0)">Convert to CSV</button>
+        <button id="downloadBtn" type="submit" onClick="submit(1)">Download Excel Sheet</button>
     </div>
     <div id="csvDisplay">
         <span id="showTotal"></span>
