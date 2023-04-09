@@ -582,7 +582,9 @@ Total Compensation: ${iComp + dComp} (${dComp} + ${iComp})`;
     </div>
 
     <script>
-       // document.querySelector('#show21').checked = true
+        ch = false
+        document.querySelector('#show21').checked = ch
+        document.querySelector('#year2021').style.opacity = ch ? 1 : 0.1
         document.querySelector('#fdSrNoBlock').style.display = 'none'
     </script>
 </body>
