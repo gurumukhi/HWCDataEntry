@@ -1,169 +1,180 @@
-    /* #show21 {
+/* #show21 {
         border: 2px solid red;
         background-color: red;
     } */
-    h1 {
-        font-size: 34px;
-        font-weight: bolder;
-        font-size: 34px;
-        font-weight: bolder;
-        text-decoration: underline;
-        text-decoration-line: underline;
-        text-decoration-style: solid;
-        text-decoration-color: currentcolor;
-        text-decoration-thickness: auto;
-        text-decoration-color: #ffbf00;
-        text-underline-position: under;
-        text-decoration-thickness: 4px;
-    }
+h1 {
+  font-size: 34px;
+  font-weight: bolder;
+  font-size: 34px;
+  font-weight: bolder;
+  text-decoration: underline;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: currentcolor;
+  text-decoration-thickness: auto;
+  text-decoration-color: #ffbf00;
+  text-underline-position: under;
+  text-decoration-thickness: 4px;
+}
 
-    #show21 {
-        accent-color: #ffbf00;
-    }
+#show21 {
+  accent-color: #ffbf00;
+}
 
-    @font-face {
-        font-family: "Avenir LT Std-Black";
-        src: URL('https://fontsfree.net//wp-content/fonts/basic/sans-serif/FontsFree-Net-AvenirLTStd-Roman.ttf') format('truetype');
-    }
+@font-face {
+  font-family: 'Avenir LT Std-Black';
+  src: URL('https://fontsfree.net//wp-content/fonts/basic/sans-serif/FontsFree-Net-AvenirLTStd-Roman.ttf')
+    format('truetype');
+}
 
-    body {
-        background-image: linear-gradient(white, #e8e8e8);
-        background-attachment: fixed;
-        /* background-color: rgba(255, 255, 255, 0); */
-        font-family: "Avenir LT Std-Black";
-        text-align: center;
-        /* font-weight: lighter; */
-        font-size: small;
-    }
+body {
+  background-image: linear-gradient(white, #e8e8e8);
+  background-attachment: fixed;
+  /* background-color: rgba(255, 255, 255, 0); */
+  font-family: 'Avenir LT Std-Black';
+  text-align: center;
+  /* font-weight: lighter; */
+  font-size: small;
+}
 
-    label {
-        display: inline-block;
-        padding-left: 10px;
-    }
+label {
+  display: inline-block;
+  padding-left: 10px;
+}
 
-    #topBlock input[type='number'] {
-        width: 60px;
-    }
+#topBlock input[type='number'] {
+  width: 60px;
+}
 
-    input {
-        display: inline-block;
-        width: 200px;
-        box-sizing: border-box;
-        padding: 5px;
-        margin-bottom: 10px;
-        border-radius: 4px;
-        border: 0.5px solid grey;
-    }
+input {
+  display: inline-block;
+  width: 200px;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 0.5px solid grey;
+}
 
-    input:focus {
-        outline: none !important;
-        border-color: #ffbf00;
-        box-shadow: 0 0 4px #ffbf00;
-    }
+input:focus {
+  outline: none !important;
+  border-color: #ffbf00;
+  box-shadow: 0 0 4px #ffbf00;
+}
 
-    .yearwise {
-        /* border: 1px solid black; */
-        margin-top: 10px;
-        /* padding: 10px; */
-    }
+.yearwise {
+  /* border: 1px solid black; */
+  margin-top: 10px;
+  /* padding: 10px; */
+}
 
-    .yearwise h2 {
-        display: inline;
-        margin-right: 10px;
-    }
+.yearwise h2 {
+  display: inline;
+  margin-right: 10px;
+}
 
-    .yearwise button {
-        display: inline;
-        margin-left: 10px;
-        margin-bottom: 10px;
-    }
+.yearwise button {
+  display: inline;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
 
-    .yearwise input {
-        display: inline-block;
-        width: 110px;
-        box-sizing: border-box;
-        padding: 5px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-    }
+.yearwise input,
+select {
+  display: inline-block;
+  width: 110px;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 
-    .yearwise input[type='number'] {
-        width: 70px;
-    }
+.yearwise select {
+  width: 130px;
+}
 
-    input[type="checkbox"] {
-        width: 20px
-    }
+/* .yearwise input[type='number'] {
+  width: 70px;
+} */
 
-    .yearwise label {
-        display: inline-block;
-        width: 200px;
-    }
+input[type='checkbox'] {
+  width: 20px;
+}
 
-    .yearwise .casesDiv {
-        display: inline-table;
-        width: 40%;
-    }
+.yearwise label {
+  display: inline-block;
+  width: 200px;
+}
 
-    .submitDiv {
-        text-align: center;
-        margin: 40px;
-    }
+.yearwise .casesDiv {
+  display: inline-table;
+  width: 40%;
+}
 
-    #downloadBtn:active {
-        position: relative;
-        top: 2px;
-        left: 2px;
+.submitDiv {
+  text-align: center;
+  margin: 40px;
+}
 
-    }
+#downloadBtn:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
 
-    #convertBtn:active {
-        position: relative;
-        top: 2px;
-        left: 2px;
+#convertBtn:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
 
-    }
+.addRowButton,
+.removeRowButton {
+  background-color: transparent;
+  border-width: 1px;
+  border-radius: 25%;
+  border-color: silver;
+}
 
-    .addRowButton,
-    .removeRowButton {
-        background-color: transparent;
-        border-width: 1px;
-        border-radius: 25%;
-        border-color: silver;
-    }
+button[type='submit'] {
+  background-color: #ffbf00;
+  border-radius: 15px;
+  border: 2px solid #ffbf00;
+  width: 400px;
+  height: 40px;
+  margin: 10px;
+}
 
+button[type='submit']:hover {
+  background-color: #e6ac00;
+  border: 2px solid #e6ac00;
+}
 
-    button[type='submit'] {
-        background-color: #ffbf00;
-        border-radius: 15px;
-        border: 2px solid #ffbf00;
-        width: 400px;
-        height: 40px;
-        margin: 10px;
-    }
+button[type='submit']:active {
+  background-color: #e6ac00;
+  border: 2px solid #e6ac00;
+}
 
-    button[type='submit']:hover {
-        background-color: #e6ac00;
-        border: 2px solid #e6ac00;
-    }
+hr {
+  background-color: #eee;
+  border: 0 none;
+  color: #eee;
+  height: 2px;
+}
 
-    button[type='submit']:active {
-        background-color: #e6ac00;
-        border: 2px solid #e6ac00;
-    }
+#csvDisplay {
+  display: none;
+}
 
-    hr {
-        background-color: #eee;
-        border: 0 none;
-        color: #eee;
-        height: 2px;
-    }
+#copyToClipboard {
+  margin: 10px;
+  padding: 10px;
+}
 
-    #csvDisplay {
-        display: none;
-    }
+.input_cases {
+  width: 50px !important;
+}
 
-    #copyToClipboard {
-        margin: 10px;
-        padding: 10px
-    }
+.input_compensation {
+  width: 90px !important;
+}
