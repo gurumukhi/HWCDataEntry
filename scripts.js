@@ -21,7 +21,8 @@ var all_wildlife = [
   'wild buffalow',
   'wild elephant',
   'wild pig',
-  'wolf'
+  'wolf',
+  'other'
 ]
 
 for (var year = 2000; year <= 2020; year++) {
