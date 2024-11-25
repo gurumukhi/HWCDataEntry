@@ -156,6 +156,10 @@ function addRow (yearwiseDiv, caseType) {
   casesInput.placeholder = '#'
   rowDiv.appendChild(casesInput)
 
+  wlSelect.addEventListener('change', function () {
+    casesInput.value = 1
+  })
+
   var compensationInput = document.createElement('input')
   compensationInput.type = 'number'
   compensationInput.name = 'compensation'
