@@ -6,6 +6,7 @@ var all_wildlife = [
   'elephant',
   'fox',
   'gaur',
+  'himalayan black bear',
   'hyena',
   'leopard',
   'monkey',
