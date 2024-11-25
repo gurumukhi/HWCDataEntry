@@ -1,5 +1,6 @@
 var yearwiseBlock = document.getElementById('yearwiseBlock')
 var all_wildlife = [
+  '',
   'bear',
   'crocodile',
   'elephant',
