@@ -8,6 +8,7 @@ var all_wildlife = [
   'gaur',
   'himalayan black bear',
   'hyena',
+  'jackal',
   'leopard',
   'monkey',
   'nilgai',
