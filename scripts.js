@@ -20,7 +20,7 @@ var all_wildlife = [
   'wild animal',
   'wild bear',
   'wild boar',
-  'wild buffalow',
+  'wild buffalo',
   'wild elephant',
   'wild pig',
   'wolf',
